@@ -7,12 +7,13 @@ This is a simple app uses test ads from google, please visit https://admob.googl
 # Sample Screens
  <p float="center">
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085003_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" />
+ <span><span><span>
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085012_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" /> 
 </p>
 
 
 
-Requirements:
+# Requirements:
 1.Android Studio (Fully Setup)
 2.Basic Knowledge of Kotlin
 3.Basic Interaction with Google Admob Account
