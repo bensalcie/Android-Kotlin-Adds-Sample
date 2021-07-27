@@ -6,9 +6,8 @@ This is a simple app uses test ads from google, please visit https://admob.googl
 
 # Sample Screens
  <p float="center">
-  <img src="https://github.com/bensalcie/TextDetector/blob/master/screenshots/s1.png" width="150" />
-  <img src="https://github.com/bensalcie/TextDetector/blob/master/screenshots/s2.png" width="150" /> 
-  <img src="https://github.com/bensalcie/TextDetector/blob/master/screenshots/s4.png" width="150" />
+  <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085003_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" />
+  <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085012_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" /> 
 </p>
 
 
