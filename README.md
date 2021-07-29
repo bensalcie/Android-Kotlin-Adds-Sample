@@ -116,37 +116,36 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
 # Adding Firebase to your Project
  Create a new Activity called Post Activity.
  In activity_post.xml change th parent layout to Linear layout (Vertical), then paste the following
-            <ImageView
-              android:layout_width="match_parent"
-              android:id="@+id/ivImage"
-              android:scaleType="centerCrop"
-              android:src="@android:drawable/ic_menu_gallery"
-              android:layout_margin="15dp"
-              android:layout_height="200dp"/>
-          <com.google.android.material.textfield.TextInputLayout
-              android:layout_width="match_parent"
-              android:layout_margin="20dp"
-              android:layout_height="wrap_content">
-              <com.google.android.material.textfield.TextInputEditText
-                  android:layout_width="match_parent"
-                  android:hint="Enter Title"
-                  android:inputType="textPersonName"
-                  android:id="@+id/etTitle"
-                  android:layout_height="wrap_content"/>
-          </com.google.android.material.textfield.TextInputLayout>
-          <com.google.android.material.textfield.TextInputLayout
-              android:layout_width="match_parent"
-              android:layout_margin="20dp"
-              android:layout_height="wrap_content">
-              <com.google.android.material.textfield.TextInputEditText
-                  android:layout_width="match_parent"
-                  android:hint="Description"
-                  android:lines="5"
-                  android:id="@+id/etDescripion"
-                  android:gravity="start"
-                  android:layout_height="wrap_content"/>
-          </com.google.android.material.textfield.TextInputLayout>
-
+             <ImageView
+               android:layout_width="match_parent"
+               android:id="@+id/ivImage"
+               android:scaleType="centerCrop"
+               android:src="@android:drawable/ic_menu_gallery"
+               android:layout_margin="15dp"
+               android:layout_height="200dp"/>
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_margin="20dp"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:hint="Enter Title"
+                   android:inputType="textPersonName"
+                   android:id="@+id/etTitle"
+                   android:layout_height="wrap_content"/>
+           </com.google.android.material.textfield.TextInputLayout>
+           <com.google.android.material.textfield.TextInputLayout
+               android:layout_width="match_parent"
+               android:layout_margin="20dp"
+               android:layout_height="wrap_content">
+               <com.google.android.material.textfield.TextInputEditText
+                   android:layout_width="match_parent"
+                   android:hint="Description"
+                   android:lines="5"
+                   android:id="@+id/etDescripion"
+                   android:gravity="start"
+                   android:layout_height="wrap_content"/>
+           </com.google.android.material.textfield.TextInputLayout>
           <ProgressBar
               android:layout_width="wrap_content"
               android:indeterminate="true"
