@@ -9,6 +9,8 @@ This is a simple app uses test ads from google, please visit https://admob.googl
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085003_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" />
  <span><span><span>
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085012_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" /> 
+
+  
 </p>
 
 
@@ -107,8 +109,171 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
               }
           })
       }
+  
+  
 
 # Sync your project and Run.
+  
+  
+# Adding Firebase to your Project
+ Create a new Activity called Post Activity.
+ In activity_post.xml change th parent layout to Linear layout (Vertical), then paste the following
+  
+    <ImageView
+           android:layout_width="match_parent"
+           android:id="@+id/ivImage"
+           android:scaleType="centerCrop"
+           android:src="@android:drawable/ic_menu_gallery"
+           android:layout_margin="15dp"
+           android:layout_height="200dp"/>
+
+     <com.google.android.material.textfield.TextInputLayout
+         android:layout_width="match_parent"
+         android:layout_margin="20dp"
+         android:layout_height="wrap_content">
+         <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="match_parent"
+             android:hint="Enter Title"
+             android:inputType="textPersonName"
+             android:id="@+id/etTitle"
+             android:layout_height="wrap_content"/>
+     </com.google.android.material.textfield.TextInputLayout>
+  
+     <com.google.android.material.textfield.TextInputLayout
+         android:layout_width="match_parent"
+         android:layout_margin="20dp"
+         android:layout_height="wrap_content">
+         <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="match_parent"
+             android:hint="Description"
+             android:lines="5"
+             android:id="@+id/etDescripion"
+             android:gravity="start"
+             android:layout_height="wrap_content"/>
+     </com.google.android.material.textfield.TextInputLayout>
+
+     <ProgressBar
+         android:layout_width="wrap_content"
+         android:indeterminate="true"
+         android:layout_margin="5dp"
+         android:layout_gravity="center"
+         android:visibility="gone"
+         android:id="@+id/progressbar"
+         android:layout_height="wrap_content"/>
+     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+         android:layout_width="wrap_content"
+         android:text="POST NOW"
+         android:layout_gravity="center"
+         android:textColor="@color/white"
+         android:gravity="center"
+         android:onClick="postItem"
+         android:id="@+id/btnPost"
+         android:layout_height="wrap_content"/>    
+  
+# PostActivity.kt File
+  Add these at the start of PostActivity.kt
+  
+     private lateinit var storageReference: StorageReference
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var progressBar: ProgressBar
+  
+## Inside on create function 
+  Paste the following inside the on create function
+  
+         progressBar = findViewById(R.id.progressbar)
+              storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES")
+              databaseReference = FirebaseDatabase.getInstance().reference.child("MODCOM/POSTS")
+       When taping on the image view we created above, we shiuld get to the gallery, This is achieved by the following code, add it after the above code
+          ivImage.setOnClickListener {
+                  val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+                  galleryIntent.setType("image/*")
+                  startActivityForResult(galleryIntent,GALLERY_REQUEST_CODE)
+              }
+
+  
+  # Handling he post and Mking it ready for upload
+  This function will pick our inputs and Vlidate them before uplaoding to firebase, Please note that we have also allowed our users to upload the post without an image
+         
+  
+             fun postItem(view: View) {
+                      progressBar.visibility = View.VISIBLE
+                      val title = etTitle.text.toString()
+                      val descrition = etDescription.text.toString()
+                      if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(descrition)){
+                          //ready to post
+                              var imageurl = "default"
+                          if (imageUri!=null){
+                              //image  supplied
+                              val uploadTask:UploadTask = storageReference.putFile(imageUri!!)
+                              uploadTask.continueWithTask { task ->
+                                  if (!task.isSuccessful) {
+                                      task.exception?.let {
+                                          throw it
+                                      }
+                                  }
+                                  storageReference.downloadUrl
+                              }.addOnCompleteListener { task ->
+                                  if (task.isSuccessful) {
+                                      val downloadUri = task.result
+                                      uploadToFirebase(title = title,description= descrition,imageurl = downloadUri.toString())
+
+                                  } else {
+                                      Toast.makeText(this, "Something went wrong while uploading image", Toast.LENGTH_SHORT).show()
+                                  }
+                              }
+
+                          }else{
+                              //image not supplied
+                              progressBar.visibility = View.VISIBLE
+                              uploadToFirebase(title = title,description= descrition,imageurl = imageurl)
+
+                          }
+
+
+
+                      }
+
+
+                  }
+
+  # Its time to upload our post to Firebase
+ Add this method in your PostActivity.kt
+//function to upload to firebase
+    //please supply title, description and image
+  
+    private fun uploadToFirebase(title:String, description:String,  imageurl:String){
+        val hashMap = HashMap<String, Any>()
+        hashMap["title"] = title
+        hashMap["description"] = description
+        hashMap["timestamp"] = System.currentTimeMillis()
+        hashMap["image"]=imageurl
+        //random key
+        val postid = databaseReference.push().key.toString()
+        databaseReference.child(postid).updateChildren(hashMap).addOnCompleteListener{
+            if (it.isSuccessful){
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Posted Successfully", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
+                    }else{
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Error:${it.exception?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+# Get the Image path.
+  We have to identify the path where we selected the image from the gallery, so this function will help us achieve that and return the result to the imageview created earlier
+    
+      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+                imageUri = data?.data!!
+                ivImage.setImageURI(imageUri)
+            }
+        }
+# Test Case
+  This is what you will see when you check in your databse after uploading it.
+    <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/7.png" width="100%" /> 
 
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
