@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460922873384",
+    "project_id": "modcom-1e2a7",
+    "storage_bucket": "modcom-1e2a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460922873384:android:a7ec915f85911a3e0bb71d",
+        "android_client_info": {
+          "package_name": "com.modcom.bensalcie.demofirebasechatandads"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460922873384-v6j9acbev0n95lml98ij8m7qm93k15j6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQHYM5Xar5QUieu2DZGxS3AJLtzSmsq4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460922873384-v6j9acbev0n95lml98ij8m7qm93k15j6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
