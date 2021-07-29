@@ -1,0 +1,99 @@
+package com.modcom.bensalcie.demofirebasechatandads
+
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.HashMap
+
+
+class PostActivity : AppCompatActivity() {
+    private lateinit var etTitle :TextInputEditText
+    private lateinit var etDescription :TextInputEditText
+    private lateinit var ivImage:ImageView
+    private  var imageUri:Uri ?=null
+    private val GALLERY_REQUEST_CODE = 5373
+    private lateinit var storageReference: StorageReference
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var progressBar: ProgressBar
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_post)
+        etDescription = findViewById(R.id.etDescripion)
+        etTitle = findViewById(R.id.etTitle)
+        ivImage = findViewById(R.id.ivImage)
+        progressBar = findViewById(R.id.progressbar)
+        storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES")
+        databaseReference = FirebaseDatabase.getInstance().reference.child("MODCOM/POSTS")
+        ivImage.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+            galleryIntent.setType("image/*")
+            startActivityForResult(galleryIntent,GALLERY_REQUEST_CODE)
+        }
+    }
+
+    fun postItem(view: View) {
+        progressBar.visibility = View.VISIBLE
+        val title = etTitle.text.toString()
+        val descrition = etDescription.text.toString()
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(descrition)){
+            //ready to post
+                var imageurl = "default"
+            if (imageUri!=null){
+                //image  supplied
+
+
+            }else{
+                //image not supplied
+                progressBar.visibility = View.VISIBLE
+
+                val hashMap = HashMap<String, Any>()
+                hashMap["title"] = title
+                hashMap["description"] = descrition
+                hashMap["timestamp"] = System.currentTimeMillis()
+                hashMap["image"]="default"
+                //random key
+                val postid = databaseReference.push().key.toString()
+
+                databaseReference.child(postid).updateChildren(hashMap).addOnCompleteListener{
+                    if (it.isSuccessful){
+                        progressBar.visibility = View.GONE
+
+                        Toast.makeText(this, "Posted Successfully", Toast.LENGTH_SHORT).show()
+                    }else{
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this, "Error:${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+
+
+        }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+            imageUri = data?.data!!
+            ivImage.setImageURI(imageUri)
+        }
+    }
+}

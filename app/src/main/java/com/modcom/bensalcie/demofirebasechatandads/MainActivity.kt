@@ -1,8 +1,10 @@
 package com.modcom.bensalcie.demofirebasechatandads
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         mAdView = findViewById(R.id.adView)
         initializeAds()
         loadBannerAd()
-        loadInterstitialAd()
+//        loadInterstitialAd()
     }
 
 
@@ -47,5 +49,9 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    fun movetopost(view: View) {
+        startActivity(Intent(this,PostActivity::class.java))
     }
 }
