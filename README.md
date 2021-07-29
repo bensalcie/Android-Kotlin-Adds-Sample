@@ -117,14 +117,14 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
  Create a new Activity called Post Activity.
  In activity_post.xml change th parent layout to Linear layout (Vertical), then paste the following
   
-  
-  <ImageView
-         android:layout_width="match_parent"
-         android:id="@+id/ivImage"
-         android:scaleType="centerCrop"
-         android:src="@android:drawable/ic_menu_gallery"
-         android:layout_margin="15dp"
-         android:layout_height="200dp"/>
+    <ImageView
+           android:layout_width="match_parent"
+           android:id="@+id/ivImage"
+           android:scaleType="centerCrop"
+           android:src="@android:drawable/ic_menu_gallery"
+           android:layout_margin="15dp"
+           android:layout_height="200dp"/>
+
      <com.google.android.material.textfield.TextInputLayout
          android:layout_width="match_parent"
          android:layout_margin="20dp"
@@ -136,6 +136,7 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
              android:id="@+id/etTitle"
              android:layout_height="wrap_content"/>
      </com.google.android.material.textfield.TextInputLayout>
+  
      <com.google.android.material.textfield.TextInputLayout
          android:layout_width="match_parent"
          android:layout_margin="20dp"
