@@ -107,8 +107,63 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
               }
           })
       }
+  
+  
 
 # Sync your project and Run.
+  
+  
+# Adding Firebase to your Project
+ Create a new Activity called Post Activity.
+ In activity_post.xml change th parent layout to Linear layout (Vertical), then paste the following
+            <ImageView
+              android:layout_width="match_parent"
+              android:id="@+id/ivImage"
+              android:scaleType="centerCrop"
+              android:src="@android:drawable/ic_menu_gallery"
+              android:layout_margin="15dp"
+              android:layout_height="200dp"/>
+          <com.google.android.material.textfield.TextInputLayout
+              android:layout_width="match_parent"
+              android:layout_margin="20dp"
+              android:layout_height="wrap_content">
+              <com.google.android.material.textfield.TextInputEditText
+                  android:layout_width="match_parent"
+                  android:hint="Enter Title"
+                  android:inputType="textPersonName"
+                  android:id="@+id/etTitle"
+                  android:layout_height="wrap_content"/>
+          </com.google.android.material.textfield.TextInputLayout>
+          <com.google.android.material.textfield.TextInputLayout
+              android:layout_width="match_parent"
+              android:layout_margin="20dp"
+              android:layout_height="wrap_content">
+              <com.google.android.material.textfield.TextInputEditText
+                  android:layout_width="match_parent"
+                  android:hint="Description"
+                  android:lines="5"
+                  android:id="@+id/etDescripion"
+                  android:gravity="start"
+                  android:layout_height="wrap_content"/>
+          </com.google.android.material.textfield.TextInputLayout>
+
+          <ProgressBar
+              android:layout_width="wrap_content"
+              android:indeterminate="true"
+              android:layout_margin="5dp"
+              android:layout_gravity="center"
+              android:visibility="gone"
+              android:id="@+id/progressbar"
+              android:layout_height="wrap_content"/>
+          <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+              android:layout_width="wrap_content"
+              android:text="POST NOW"
+              android:layout_gravity="center"
+              android:textColor="@color/white"
+              android:gravity="center"
+              android:onClick="postItem"
+              android:id="@+id/btnPost"
+              android:layout_height="wrap_content"/>
 
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
