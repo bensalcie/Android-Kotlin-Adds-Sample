@@ -50,6 +50,9 @@ dependencies {
     //add this for ads
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
     implementation 'androidx.multidex:multidex: 2.0.1'
+    //add for data retrieval
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.firebaseui:firebase-ui-database:5.0.0'
 
 
 }

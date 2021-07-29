@@ -9,6 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:id="@+id/ivImage"
+        android:padding="30dp"
         android:scaleType="centerCrop"
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_margin="15dp"

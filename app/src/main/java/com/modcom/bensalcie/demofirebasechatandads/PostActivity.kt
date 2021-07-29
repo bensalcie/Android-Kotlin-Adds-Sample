@@ -95,6 +95,7 @@ class PostActivity : AppCompatActivity() {
         hashMap["description"] = description
         hashMap["timestamp"] = System.currentTimeMillis()
         hashMap["image"]=imageurl
+        hashMap["postedby"] = "Ben Salcie"
         //random key
         val postid = databaseReference.push().key.toString()
         databaseReference.child(postid).updateChildren(hashMap).addOnCompleteListener{
