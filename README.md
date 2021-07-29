@@ -116,6 +116,8 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
 # Adding Firebase to your Project
  Create a new Activity called Post Activity.
  In activity_post.xml change th parent layout to Linear layout (Vertical), then paste the following
+  
+  
   <ImageView
          android:layout_width="match_parent"
          android:id="@+id/ivImage"
