@@ -167,6 +167,108 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
          android:onClick="postItem"
          android:id="@+id/btnPost"
          android:layout_height="wrap_content"/>    
+  
+# PostActivity.kt File
+  Add these at the start of PostActivity.kt
+  
+     private lateinit var storageReference: StorageReference
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var progressBar: ProgressBar
+  
+## Inside on create function 
+  Paste the following inside the on create function
+  
+         progressBar = findViewById(R.id.progressbar)
+              storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES")
+              databaseReference = FirebaseDatabase.getInstance().reference.child("MODCOM/POSTS")
+       When taping on the image view we created above, we shiuld get to the gallery, This is achieved by the following code, add it after the above code
+          ivImage.setOnClickListener {
+                  val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
+                  galleryIntent.setType("image/*")
+                  startActivityForResult(galleryIntent,GALLERY_REQUEST_CODE)
+              }
+
+  
+  # Handling he post and Mking it ready for upload
+  This function will pick our inputs and Vlidate them before uplaoding to firebase, Please note that we have also allowed our users to upload the post without an image
+         
+  
+             fun postItem(view: View) {
+                      progressBar.visibility = View.VISIBLE
+                      val title = etTitle.text.toString()
+                      val descrition = etDescription.text.toString()
+                      if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(descrition)){
+                          //ready to post
+                              var imageurl = "default"
+                          if (imageUri!=null){
+                              //image  supplied
+                              val uploadTask:UploadTask = storageReference.putFile(imageUri!!)
+                              uploadTask.continueWithTask { task ->
+                                  if (!task.isSuccessful) {
+                                      task.exception?.let {
+                                          throw it
+                                      }
+                                  }
+                                  storageReference.downloadUrl
+                              }.addOnCompleteListener { task ->
+                                  if (task.isSuccessful) {
+                                      val downloadUri = task.result
+                                      uploadToFirebase(title = title,description= descrition,imageurl = downloadUri.toString())
+
+                                  } else {
+                                      Toast.makeText(this, "Something went wrong while uploading image", Toast.LENGTH_SHORT).show()
+                                  }
+                              }
+
+                          }else{
+                              //image not supplied
+                              progressBar.visibility = View.VISIBLE
+                              uploadToFirebase(title = title,description= descrition,imageurl = imageurl)
+
+                          }
+
+
+
+                      }
+
+
+                  }
+
+  # Its time to upload our post to Firebase
+ Add this method in your PostActivity.kt
+//function to upload to firebase
+    //please supply title, description and image
+  
+    private fun uploadToFirebase(title:String, description:String,  imageurl:String){
+        val hashMap = HashMap<String, Any>()
+        hashMap["title"] = title
+        hashMap["description"] = description
+        hashMap["timestamp"] = System.currentTimeMillis()
+        hashMap["image"]=imageurl
+        //random key
+        val postid = databaseReference.push().key.toString()
+        databaseReference.child(postid).updateChildren(hashMap).addOnCompleteListener{
+            if (it.isSuccessful){
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Posted Successfully", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,MainActivity::class.java))
+                finish()
+                    }else{
+                progressBar.visibility = View.GONE
+                Toast.makeText(this, "Error:${it.exception?.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+# Get the Image path.
+  We have to identify the path where we selected the image from the gallery, so this function will help us achieve that and return the result to the imageview created earlier
+    
+      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK){
+                imageUri = data?.data!!
+                ivImage.setImageURI(imageUri)
+            }
+        }
 
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
