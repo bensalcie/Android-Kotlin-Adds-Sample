@@ -9,6 +9,8 @@ This is a simple app uses test ads from google, please visit https://admob.googl
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085003_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" />
  <span><span><span>
   <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/Screenshot_20210727-085012_Demo%20Firebase%20Chat%20and%20Ads.jpg" width="250" /> 
+
+  
 </p>
 
 
@@ -269,6 +271,9 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
                 ivImage.setImageURI(imageUri)
             }
         }
+# Test Case
+  This is what you will see when you check in your databse after uploading it.
+    <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/7.png" width="100%" /> 
 
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
