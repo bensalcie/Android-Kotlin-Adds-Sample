@@ -181,7 +181,7 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
   Paste the following inside the on create function
   
          progressBar = findViewById(R.id.progressbar)
-              storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES")
+              storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES").child("${System.currentTimeMillis()}"+".jpg")
               databaseReference = FirebaseDatabase.getInstance().reference.child("MODCOM/POSTS")
        When taping on the image view we created above, we shiuld get to the gallery, This is achieved by the following code, add it after the above code
           ivImage.setOnClickListener {
