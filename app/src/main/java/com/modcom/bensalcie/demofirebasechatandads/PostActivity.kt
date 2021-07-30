@@ -38,7 +38,7 @@ class PostActivity : AppCompatActivity() {
         etTitle = findViewById(R.id.etTitle)
         ivImage = findViewById(R.id.ivImage)
         progressBar = findViewById(R.id.progressbar)
-        storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES")
+        storageReference = FirebaseStorage.getInstance().reference.child("MODCOM/IMAGES").child("${System.currentTimeMillis()}"+".jpg")
         databaseReference = FirebaseDatabase.getInstance().reference.child("MODCOM/POSTS")
         ivImage.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_GET_CONTENT)
@@ -94,7 +94,7 @@ class PostActivity : AppCompatActivity() {
         hashMap["title"] = title
         hashMap["description"] = description
         hashMap["timestamp"] = System.currentTimeMillis()
-        hashMap["image"]=imageurl
+        hashMap["image"]= imageurl
         hashMap["postedby"] = "Ben Salcie"
         //random key
         val postid = databaseReference.push().key.toString()
