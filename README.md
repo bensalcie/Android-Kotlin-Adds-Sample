@@ -284,9 +284,9 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
   
   # Create an Adapter for your posts
   This will help us to fetch several posts onto our recycler view
-  class PostsAdapter constructor(options: FirebaseRecyclerOptions<Post>):
-    FirebaseRecyclerAdapter<Post, PostsAdapter.PostViewModel>(options) {
-
+  
+                 class PostsAdapter constructor(options: FirebaseRecyclerOptions<Post>):
+                   FirebaseRecyclerAdapter<Post, PostsAdapter.PostViewModel>(options) {
                       class PostViewModel internal constructor(private var view: View) : RecyclerView.ViewHolder(view) {
                           internal fun setProductName(
                               post: Post,
