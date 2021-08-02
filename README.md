@@ -277,9 +277,10 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
   
   
  # Fecthing list of posted items from Firebase Database.
-  Add the following dependancies.
-      implementation 'com.squareup.picasso:picasso:2.71828'
-      implementation 'com.firebaseui:firebase-ui-database:5.0.0'
+  Add the following dependancies
+  
+          implementation 'com.squareup.picasso:picasso:2.71828'
+          implementation 'com.firebaseui:firebase-ui-database:5.0.0'
   
   # Create an Adapter for your posts
   This will help us to fetch several posts onto our recycler view
