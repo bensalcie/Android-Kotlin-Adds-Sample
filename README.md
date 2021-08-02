@@ -355,10 +355,12 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
 
   
   On start and on stop configuration
-           override fun onStart() {
-               super.onStart()
-               mAdapter!!.startListening()
-           }
+  
+  
+            override fun onStart() {
+                super.onStart()
+                mAdapter!!.startListening()
+            }
 
            override fun onStop() {
                super.onStop()
