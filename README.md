@@ -274,7 +274,138 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
 # Test Case
   This is what you will see when you check in your databse after uploading it.
     <img src="https://github.com/bensalcie/Android-Kotlin-Adds-Sample/blob/master/7.png" width="100%" /> 
+  
+  
+ # Fecthing list of posted items from Firebase Database.
+  Add the following dependancies.
+      implementation 'com.squareup.picasso:picasso:2.71828'
+      implementation 'com.firebaseui:firebase-ui-database:5.0.0'
+  
+  # Create an Adapter for your posts
+  This will help us to fetch several posts onto our recycler view
+  class PostsAdapter constructor(options: FirebaseRecyclerOptions<Post>):
+    FirebaseRecyclerAdapter<Post, PostsAdapter.PostViewModel>(options) {
 
+                      class PostViewModel internal constructor(private var view: View) : RecyclerView.ViewHolder(view) {
+                          internal fun setProductName(
+                              post: Post,
+                              holder: PostViewModel
+                          ) {
+                              val ivImage: ImageView = itemView.findViewById(R.id.ivPost)
+                              val textTitle: MaterialTextView = itemView.findViewById(R.id.tvTitle)
+                              val tvDescription: MaterialTextView = itemView.findViewById(R.id.tvDescription)
+                              val btnReadMore: MaterialButton = itemView.findViewById(R.id.btnMore)
+                              apply {
+                                  Picasso.get().load(post.image).into(ivImage)
+                                  textTitle.text = post.title
+                                  tvDescription.text = "${post.description}\nPosted on :${post.timestamp}"
+                                  btnReadMore.setOnClickListener {
+                                      Toast.makeText(itemView.context, "This is your assignment", Toast.LENGTH_SHORT).show()
+                                  }
+                              }
+                          }
+
+                      }
+                      override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewModel {
+                          val view = LayoutInflater.from(parent.context).inflate(R.layout.posted_product, parent, false)
+                          return PostViewModel(view)
+                      }
+                      override fun onBindViewHolder(holder: PostViewModel, position: Int, model: Post) {
+                          holder.setProductName(model,holder)
+                      }
+              }
+
+  
+# Add a Data class to hold your single item
+  This data class will contain exact field names you saved in your database for every single item
+  
+       data class Post(
+           val title:String?=null,
+           val description:String?=null,
+           val timestamp :Long?=null,
+           val image:String?=null,
+           val postedby:String?=null
+       )
+# Finally trigger the process of retrieving in your MainActivity
+  Initialize the adapter and recyclerview  on create.
+        private lateinit var recyclerPosts:RecyclerView
+        private var mAdapter: PostsAdapter? = null
+  
+  
+  After set content view
+             recyclerPosts = findViewById(R.id.recyclerposts)
+             loadPosts()
+  Create load posts function
+  
+          private fun loadPosts() {
+                val query= FirebaseDatabase.getInstance().reference.child("MODCOM").child("POSTS")
+                val options = FirebaseRecyclerOptions.Builder<Post>().setQuery(query, Post::class.java).build()
+                mAdapter = PostsAdapter(options)
+                recyclerPosts.apply {
+                    layoutManager = GridLayoutManager(this@MainActivity,2)
+                    adapter = mAdapter
+                }
+                //stop progress here
+            }
+
+  
+  On start and on stop configuration
+           override fun onStart() {
+               super.onStart()
+               mAdapter!!.startListening()
+           }
+
+           override fun onStop() {
+               super.onStop()
+
+               if (mAdapter != null) {
+                   mAdapter!!.stopListening()
+               }
+           }
+  
+  #Add the layout for individual item (Preferably inside a card View)
+             <LinearLayout
+                  android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+                  <ImageView
+                      android:layout_width="match_parent"
+                      android:src="@drawable/loading"
+                      android:id="@+id/ivPost"
+                      android:scaleType="centerCrop"
+                      android:layout_height="200dp"/>
+                  <com.google.android.material.textview.MaterialTextView
+                      android:layout_width="match_parent"
+                      android:text="Title Here"
+                      android:textAlignment="center"
+                      android:textStyle="bold"
+                      android:id="@+id/tvTitle"
+                      android:lines="1"
+                      android:textSize="18sp"
+                      android:layout_height="wrap_content"/>
+                  <com.google.android.material.textview.MaterialTextView
+                      android:layout_width="match_parent"
+                      android:text="Description Here"
+                      android:textAlignment="center"
+                      android:textSize="14sp"
+                      android:id="@+id/tvDescription"
+                      android:lines="3"
+                      android:layout_margin="5dp"
+                      android:layout_height="wrap_content"/>
+                  <com.google.android.material.button.MaterialButton
+                      android:layout_width="wrap_content"
+                      android:text="Read More"
+                      android:layout_gravity="center"
+                      android:id="@+id/btnMore"
+                      app:cornerRadius="20dp"
+                      android:layout_margin="10dp"
+                      android:layout_height="wrap_content"/>
+
+              </LinearLayout>
+
+  
+
+  
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
 # Twitter:@ibensalcie
