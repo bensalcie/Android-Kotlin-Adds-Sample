@@ -413,7 +413,10 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
                     </LinearLayout>
 
 
-
+# Facing manifest merger error?
+  Add this lin inside your gradle.properties file
+  
+        android.enableJetifier=true
   
 You definatley need a big clap for reaching this end, Hope you learnt something.
 If you had any problem during this tutorial please write back to me:
