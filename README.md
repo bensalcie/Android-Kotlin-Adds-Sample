@@ -329,13 +329,17 @@ The ad unit id used over here is a test unit id, to get one visit https://admob.
        )
 # Finally trigger the process of retrieving in your MainActivity
   Initialize the adapter and recyclerview  on create.
+  
+  
         private lateinit var recyclerPosts:RecyclerView
         private var mAdapter: PostsAdapter? = null
   
   
   After set content view
+  
              recyclerPosts = findViewById(R.id.recyclerposts)
              loadPosts()
+  
   Create load posts function
   
           private fun loadPosts() {
